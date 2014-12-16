@@ -304,6 +304,7 @@ public class HomeController {
 	 */
 
 	@RequestMapping(value = "/registro", method = RequestMethod.POST)
+	@Transactional
 	public String registro(HttpServletRequest request, Model model, HttpSession session) {	
 		String nombre = request.getParameter("nombre");
 		String email = request.getParameter("email");
@@ -324,19 +325,23 @@ public class HomeController {
 		}else if(password1.length() < 4){
 			passwordCorta = true;
 
-		}else if (password1 != password2){
+		}else if (!password1.equals(password2) ){
 			passwordIguales = true;
 
 		}else{
 			try{
 				
-			u = (User)entityManager.createNamedQuery("userByLogin").setParameter("loginParam", nombre).getSingleResult();
-			model.addAttribute("error", "El usuario ya existe");
-			
+//			u = (User)entityManager.createNamedQuery("userByLogin").setParameter("loginParam", nombre).getSingleResult();
+//			model.addAttribute("error", "El usuario ya existe");
+	
+				User user = new User("user", nombreUsuario, password1, nombre, email);
+				entityManager.persist(user);
+
+				
 			}catch(NoResultException e){
 				
-				//User user = new User(role, nombreUsuario, password)
-			//	entityManager.persist(user);
+//				User user = new User("user", nombreUsuario, password1, nombre, email);
+//				entityManager.persist(user);
 				
 			}
 			
