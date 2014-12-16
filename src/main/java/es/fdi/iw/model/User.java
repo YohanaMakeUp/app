@@ -24,34 +24,46 @@ public class User {
 	
 	private String role;
 	
-	private String nombreUsuario;
+	private String alias;
 	
 	private String password;
 		
+	private String email;
 	
-	@OneToOne
-	@JoinColumn(name = "cliente_fk")
-	private Cliente cliente;
+	private String nombre;
+	
+
 	
 	@OneToMany(mappedBy = "user",fetch=FetchType.LAZY)
 	private List<Fecha> fechas;
 	
 	public User() {}
 	
-	public User(String role, String nombreUsuario, String password) {
+	public User(String role, String alias, String password, String nombre, String email) {
 		this.role = role;
-		this.nombreUsuario = nombreUsuario;
+		this.alias = alias;
 		this.password = password;
+		this.email = email;
+		this.nombre = nombre;
+		
 	}
 	
 	
 	
-	public Cliente getCliente() {
-		return cliente;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public List<Fecha> getFechas() {
@@ -67,7 +79,7 @@ public class User {
 	}
 	
 	public String getNombreUsuario() {
-		return nombreUsuario;
+		return alias;
 	}
 
 	public String getPassword() {
@@ -99,7 +111,7 @@ public class User {
 	}
 
 	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
+		this.alias = nombreUsuario;
 	}
 
 	public void setPassword(String password) {

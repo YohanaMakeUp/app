@@ -310,7 +310,8 @@ public class HomeController {
 		String nombreUsuario = request.getParameter("nombreUsuario");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
-
+		User u = null;
+		
 		boolean campos_vacios = false;
 		boolean passwordCorta = false;
 		boolean passwordIguales = false;
@@ -327,8 +328,19 @@ public class HomeController {
 			passwordIguales = true;
 
 		}else{
-
-
+			try{
+				
+			u = (User)entityManager.createNamedQuery("userByLogin").setParameter("loginParam", nombre).getSingleResult();
+			model.addAttribute("error", "El usuario ya existe");
+			
+			}catch(NoResultException e){
+				
+				//User user = new User(role, nombreUsuario, password)
+			//	entityManager.persist(user);
+				
+			}
+			
+			
 		}
 
 		if (campos_vacios) {
