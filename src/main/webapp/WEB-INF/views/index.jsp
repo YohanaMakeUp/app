@@ -55,6 +55,10 @@ jQuery.noConflict()(function ($) {
 <div id="container" style="box-shadow: none; border: none">
   <div class="none">
     <h5><b>Yohana Moreno Rojas profesional dedicada al mundo del maquillaje y la peluqueria.</b></h5>
+	 <button onclick='getElementById("titulo").innerHTML=getElementById("nuevoTitulo").value'>Cambiar Titulo</button>
+  <input id="nuevoTitulo" name="nuevoTitulo" type = "text"><br>
 	<h5>Editorial, Moda/Belleza, Producción Gráfica, Rodaje Publicitario, Celebrities, Pasarela, Eventos, Asesoramiento, Novias, Automaquillaje.</h5>
   </div>
+   <button onclick='getElementById("titulo").innerHTML=getElementById("nuevoTitulo").value'>Cambiar Titulo</button>
+  <input id="nuevoTitulo" name="nuevoTitulo" type = "text"><br>
 </div>
