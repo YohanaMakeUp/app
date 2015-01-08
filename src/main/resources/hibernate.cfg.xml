@@ -12,6 +12,9 @@
 	<property name="hibernate.format_sql">true</property>	
 	
 	<!-- Auto-generate tables -->
-	<property name="hibernate.hbm2ddl.auto">create</property>
+	<!-- validate = solo valida, no da fallo si ya existen las tablas
+		 create = crea las tablas, da fallo si ya existen 
+		 create and drop = borra las tablas existentes y las crea de cero-->
+	<property name="hibernate.hbm2ddl.auto">validate</property> 
 </session-factory>
 </hibernate-configuration>

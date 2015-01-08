@@ -21,7 +21,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id;
+	private Integer id;
 	
 	@Version
 	private int version;
@@ -90,15 +90,11 @@ public class User {
 		return password;
 	}
 
-	public String toString() {
+	public Integer getId() {
 		return id;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
+	public void Integer(Integer id) {
 		this.id = id;
 	}
 
