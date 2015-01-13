@@ -36,6 +36,8 @@ public class User {
 	
 	private String nombre;
 	
+	private String apellidos;
+	
 
 	
 	@OneToMany(mappedBy = "user",fetch=FetchType.LAZY)
@@ -43,12 +45,14 @@ public class User {
 	
 	public User() {}
 	
-	public User(String role, String alias, String password, String nombre, String email) {
+	public User(String nombre, String apellidos,String email ,String alias, String password, String role) {
+		
+		this.nombre = nombre;
+		this.apellidos = apellidos;
 		this.role = role;
 		this.alias = alias;
 		this.password = password;
 		this.email = email;
-		this.nombre = nombre;
 		
 	}
 	
@@ -68,6 +72,14 @@ public class User {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
 
 	public List<Fecha> getFechas() {

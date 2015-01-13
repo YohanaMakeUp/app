@@ -10,9 +10,11 @@
 					value="${requestScope['javax.servlet.forward.servlet_path']}" /> 
 				<label>Nombre</label>
 				<input id="nombre" name="nombre" type="text"><br> 
+				<label>Apellidos</label>
+				<input id="apellidos" name="apellidos" type="text"><br> 
 				<label>Email</label>
 				<input id="email" name="email" type="text"><br> 
-				<label>Usuario</label>
+				<label>Nombre de usuario</label>
 				<input id="nombreUsuario" name="nombreUsuario" type="text"><br>
 				<label>Password </label><input id="password" name="password1"
 					type="password"><br> <label>Repetir password </label><input
