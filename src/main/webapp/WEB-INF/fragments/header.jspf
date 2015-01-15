@@ -52,6 +52,8 @@
   <!-- Dynamic Menu -->
   <ol id="menu" class="simple_menu simple_menu_css horizontal black_menu">
     <li><a href="index">Inicio</a></li>
+    <!-- Mostrar en nombre de usuario logueado en ese momento -->
+ <!--<li><label> ${user.getNombre()} </label></li>-->
     <li><a href="#">Galeria</a>
       <ol>
         <li><a href="galleryEditorial">Editorial</a></li>

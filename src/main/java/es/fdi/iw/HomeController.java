@@ -278,38 +278,50 @@ public class HomeController {
 		return "logIn";
 	}
 
-
 	@RequestMapping(value = "/logIn", method = RequestMethod.POST)
+	@Transactional
 	public String login(HttpServletRequest request, Model model, HttpSession session) {
+
 		String formLogin = request.getParameter("name");
 		String formPass = request.getParameter("password");
 
-		// validate request
-		boolean error = false;
-		if (formLogin == null || formLogin.length() < 4 || formPass == null || formPass.length() < 4) {
-			error = true;
-		} else {
-			// check password here; if errors, set 'error' to true...
+
+		User u = null;
+
+		try {
+
+			u = (User) entityManager.createNamedQuery("userByLogin").setParameter("loginParam", formLogin).getSingleResult();
+	
+		} catch (NoResultException e) {
+
+			model.addAttribute("error", "Usuario no encontrado");
+
 		}
 
-		// output
-		if (error) {
-			model.addAttribute("loginError", "error en usuario o contraseña");
-		} else {
-			//	session.setAttribute("user", new User(formLogin, "admin".equals(formLogin) ? "admin" : "user", , ));
+		if(u != null){
+
+			if (!formPass.equals(u.getPassword())) {
+
+				model.addAttribute("loginError", "error en usuario o contrasena");
+
+			}else{
+
+				session.setAttribute("user", u);
+
+			}
+
 		}
 
 		return "logIn";
 	}
 
-	ArrayList<User> listaUsuarios = new ArrayList<User>();
 
-	public boolean noEstaRepe(String alias) {
+	private boolean noEstaRepe(String alias) {
 		return entityManager.createNamedQuery("userByLogin")
 				.setParameter("loginParam", alias)
 				.getResultList().size() == 0;
 	}
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -317,69 +329,43 @@ public class HomeController {
 	@RequestMapping(value = "/registro", method = RequestMethod.POST)
 	@Transactional
 	public String registro(HttpServletRequest request, Model model, HttpSession session) {	
+
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
 		String email = request.getParameter("email");
 		String nombreUsuario = request.getParameter("nombreUsuario");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
-		User u = null;
 
-		String nombreUsuarioAux;
-
-		boolean campos_vacios = false;
-		boolean passwordCorta = false;
-		boolean passwordIguales = false;
-		boolean aliasUsado = false;
-		int i = 0;
-
-		if ( ! noEstaRepe(nombreUsuario)) {
-			return "gaitas";
-		}
-		
-		if (nombre == "" || apellidos == "" || email == "" || nombreUsuario == "" || password1 == "" || password2 == "") {
-			campos_vacios = true;
-
-		}else if(password1.length() < 4){
-			passwordCorta = true;
-
-		}else if (!password1.equals(password2) ){
-			passwordIguales = true;
-
-		}else{
-			try{
-
-				//			u = (User)entityManager.createNamedQuery("userByLogin").setParameter("loginParam", nombre).getSingleResult();
-				//			model.addAttribute("error", "El usuario ya existe");
-
-				User user = new User( nombre, apellidos, email , nombreUsuario, password1, "user");
-				entityManager.persist(user);
-
-			}catch(NoResultException e){
-
-				//				User user = new User("user", nombreUsuario, password1, nombre, email);
-				//				entityManager.persist(user);
-
-			}
-
-
-		}
-
-		if (campos_vacios) {
-			model.addAttribute("error", "Rellene todos los campos");
-
-		}else if(aliasUsado){
+		if (!noEstaRepe(nombreUsuario)) {
 
 			model.addAttribute("error", "El alias introducido ya existe");
 
-		}else if (passwordCorta) {
+		}
+
+		if (nombre == "" || apellidos == "" || email == "" || nombreUsuario == "" || password1 == "" || password2 == "") {
+
+			model.addAttribute("error", "Rellene todos los campos");
+
+
+		}else if(password1.length() < 4){
 
 			model.addAttribute("error", "Longitud de la password demasiado corta (min 4 caracteres)");
-		} else if (passwordIguales){
+
+
+		}else if (!password1.equals(password2) ){
 
 			model.addAttribute("error", "No coinciden las passwords");
-		} 
 
+
+		}else{
+
+
+			User user = new User( nombre, apellidos, email , nombreUsuario, password1, "user");
+			entityManager.persist(user);
+
+
+		}
 
 
 		return "registro";

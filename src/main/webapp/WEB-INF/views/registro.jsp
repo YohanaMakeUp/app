@@ -9,16 +9,16 @@
 				<input type="hidden" id="source" name="source"
 					value="${requestScope['javax.servlet.forward.servlet_path']}" /> 
 				<label>Nombre</label>
-				<input id="nombre" name="nombre" type="text"><br> 
+				<input id="nombre" name="nombre" type="text" required><br> 
 				<label>Apellidos</label>
-				<input id="apellidos" name="apellidos" type="text"><br> 
+				<input id="apellidos" name="apellidos" type="text" required><br> 
 				<label>Email</label>
-				<input id="email" name="email" type="text"><br> 
+				<input id="email" name="email" type="text" required><br> 
 				<label>Nombre de usuario</label>
-				<input id="nombreUsuario" name="nombreUsuario" type="text"><br>
+				<input id="nombreUsuario" name="nombreUsuario" type="text" required><br>
 				<label>Password </label><input id="password" name="password1"
-					type="password"><br> <label>Repetir password </label><input
-					id="password" name="password2" type="password"><br> <input
+					type="password" required><br> <label>Repetir password </label><input
+					id="password" name="password2" type="password" required><br> <input
 					type="submit" value="Enviar formulario"> <input
 					type="button" value="Resetear Formulario"
 					onClick="this.form.reset()"> <label></label>
