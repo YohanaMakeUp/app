@@ -99,6 +99,7 @@ h4 {font-size: 1.2em; font-weight: 700}
 h5 {padding: 2px 0;
 	font-size: 1em; text-align: center;}
 
+h6 {font-size: 13px; padding: 10px 20px; padding-top: 10px; padding-right: 20px; color: #FFF; font-family: 'Georgia'; }
 
 p {
 	padding: 10px 0;

@@ -341,9 +341,7 @@ public class HomeController {
 
 			model.addAttribute("error", "El alias introducido ya existe");
 
-		}
-
-		if (nombre == "" || apellidos == "" || email == "" || nombreUsuario == "" || password1 == "" || password2 == "") {
+		}else if (nombre == "" || apellidos == "" || email == "" || nombreUsuario == "" || password1 == "" || password2 == "") {
 
 			model.addAttribute("error", "Rellene todos los campos");
 
@@ -371,7 +369,12 @@ public class HomeController {
 		return "registro";
 	}
 
-
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		logger.info("User '{}' logged out", session.getAttribute("user"));
+		session.invalidate();
+		return "redirect:/";
+	}
 
 
 

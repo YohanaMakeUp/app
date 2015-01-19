@@ -53,7 +53,7 @@
   <ol id="menu" class="simple_menu simple_menu_css horizontal black_menu">
     <li><a href="index">Inicio</a></li>
     <!-- Mostrar en nombre de usuario logueado en ese momento -->
- <!--<li><label> ${user.getNombre()} </label></li>-->
+ 
     <li><a href="#">Galeria</a>
       <ol>
         <li><a href="galleryEditorial">Editorial</a></li>
@@ -68,8 +68,17 @@
 	<li><a href="bio">Bio</a></li>
 	<li><a href="citas">Citas</a></li>
     <li><a href="contacto">Contacto</a></li>
+    <c:choose>
+    <c:when test="${not empty user}">
+     <li><h6>${user.getNombre()}</h6></li>
+    <li class="last"><a href="${prefix}logout">Log Out</a></li>
+    </c:when>
+    <c:otherwise>
     <li><a href="registro">Registro</a></li>
     <li class="last"><a href="logIn">LogIn</a>
+   
+    </c:otherwise>
+    </c:choose>
   </ol>
   <div class="clr"></div>
 </div>

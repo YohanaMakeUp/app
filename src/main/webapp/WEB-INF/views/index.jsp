@@ -54,11 +54,19 @@ jQuery.noConflict()(function ($) {
 <!-- wrapper -->
 <div id="container" style="box-shadow: none; border: none">
   <div class="none">
-    <h5><b>Yohana Moreno Rojas profesional dedicada al mundo del maquillaje y la peluqueria.</b></h5>
+    <h5><b>Yohana Moreno Rojas, profesional dedicada al mundo del maquillaje y la peluqueria.</b></h5>
+    <c:choose>
+    <c:when test="${user.getRole() == 'Admin' and not empty user}">
 	 <button onclick='getElementById("titulo").innerHTML=getElementById("nuevoTitulo").value'>Cambiar Titulo</button>
   <input id="nuevoTitulo" name="nuevoTitulo" type = "text"><br>
+    </c:when>
+  </c:choose>
 	<h5>Editorial, Moda/Belleza, Producción Gráfica, Rodaje Publicitario, Celebrities, Pasarela, Eventos, Asesoramiento, Novias, Automaquillaje.</h5>
   </div>
+  <c:choose>
+   <c:when test="${user.getRole() eq 'Admin' and not empty user}">
    <button onclick='getElementById("titulo").innerHTML=getElementById("nuevoTitulo").value'>Cambiar Titulo</button>
   <input id="nuevoTitulo" name="nuevoTitulo" type = "text"><br>
+  </c:when>
+   </c:choose>
 </div>
