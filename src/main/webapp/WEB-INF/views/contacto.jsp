@@ -6,9 +6,42 @@
     <div id="fane1">
       <!-- Aqui va el formulario -->
 	  <form Action="mailto:robertomore9@hotmail.com?Subject=Test_Post" METHOD="POST" enctype="text/plain">
-	  <label>Nombre	</label><input id="Nombre" name ="Nombre del cliente" type="text" placeholder="Nombre" ><br>
-	  <label>Apellido	</label><input id="Nombre" name ="Apellido del cliente" type="text" placeholder="Apellido"><br>
-	  <label>Email  </label><input id="Nombre" name="Email del cliente" type="text" placeholder="Email"><br>
+	  
+	  <label>Nombre	</label><br>
+	  
+	 <c:choose>
+    <c:when test="${not empty user}">
+	  <input id="Nombre" name ="Nombre del cliente" type="text" value="${user.getNombre()}"><br>
+	     </c:when>
+	     <c:otherwise>
+	      <input id="Nombre" name ="Nombre del cliente" type="text" placeholder="Nombre" ><br>
+	       </c:otherwise>
+  </c:choose>
+  
+	 <label>Apellido</label><br>
+	 
+	   <c:choose>
+    <c:when test="${not empty user}">
+	  <input id="Nombre" name ="Apellido del cliente" type="text" value="${user.getApellidos()}"><br>
+	   </c:when>
+	     <c:otherwise>
+	     	  <input id="Nombre" name ="Apellido del cliente" type="text" placeholder="Apellido"><br>
+	           </c:otherwise>
+  </c:choose>
+  
+	  <label>Email  </label><br>
+	  
+	     <c:choose>
+    <c:when test="${not empty user}">
+    
+	  <input id="Nombre" name="Email del cliente" type="email" value="${user.getEmail()}"><br>
+	   </c:when>
+	     <c:otherwise>
+	     
+	  	  <input id="Nombre" name="Email del cliente" type="email" placeholder="Email"><br>
+	     </c:otherwise>
+  </c:choose>
+  
 	  <label>Asunto</label><br>
 		<textarea id="nuevoTextoDescriptivo" name="Asunto" style="resize:none;"></textarea><br>
 		<input type="submit"  value="Enviar"> 

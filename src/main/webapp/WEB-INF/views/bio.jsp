@@ -12,10 +12,14 @@
 	Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. </p>
   </div>
   <div style="margin-left: -19px; margin-bottom: 15px;"> <img title="" src="resources/img/slideshow/slide_2.jpg" alt="" width="600" height="450"> </div>
+    <c:choose>
+    <c:when test="${user.getRole() == 'Admin' and not empty user}">
   <button onclick='getElementById("titulo").innerHTML=getElementById("nuevoTitulo").value'>Cambiar Titulo</button>
-  <input id="nuevoTitulo" name="nuevoTitulo" type = "text"><br>  
-  <button onclick='getElementById("descripcion").innerHTML = getElementById("nuevaDescripcion").value'>Cambiar Descripcion</button>
-  <textArea id="nuevaDescripcion" name="nuevaDescripcion" type = "text"></textArea><br> 
+  <input id="nuevoTitulo" name="nuevoTitulo" type = "text"><br> 
+  <button onclick='getElementById("descripcion").innerHTML = getElementById("nuevaDescripcion").value'>Cambiar Descripcion</button><br>
+  <textArea id="nuevaDescripcion" name="nuevaDescripcion" type = "text"></textArea><br>
+    </c:when>
+  </c:choose> 
   <div style="clear:both"></div>
 </div>
 <!-- close container -->

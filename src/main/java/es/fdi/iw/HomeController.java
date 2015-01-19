@@ -312,7 +312,7 @@ public class HomeController {
 
 		}
 
-		return "logIn";
+		return "redirect:/";
 	}
 
 
