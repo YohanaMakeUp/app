@@ -170,7 +170,22 @@ public class HomeController {
 
 		return "citas";
 	}
+	
+	
+	private boolean rangoDeFechas(Date fechaIni, Date fechaFin) {
+		return entityManager.createNamedQuery("fechaByUser")
+				.setParameter("loginParamIni", fechaIni).setParameter("loginParamFin", fechaFin)
+				.getResultList().size() == 0;
+	}
 
+	@RequestMapping(value = "/citas", method = RequestMethod.POST)
+	public String citas(HttpServletRequest request, Model model, HttpSession session) {	
+
+		
+		
+		return "citas";
+	}
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -361,12 +376,12 @@ public class HomeController {
 
 			User user = new User( nombre, apellidos, email , nombreUsuario, password1, "user");
 			entityManager.persist(user);
-
-
+			session.setAttribute("user", user);
+			
 		}
 
 
-		return "registro";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

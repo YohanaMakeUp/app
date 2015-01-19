@@ -8,8 +8,14 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Fecha
  *
  */
-@Entity
 
+
+@NamedQueries({
+    @NamedQuery(name="fechaByUser",
+        query="SELECT f FROM Fecha f  WHERE f.FechaIni >= :loginParamIni or f.FechaFin <= :loginParamFin)")
+})
+
+@Entity
 public class Fecha {
 
 	@Id
