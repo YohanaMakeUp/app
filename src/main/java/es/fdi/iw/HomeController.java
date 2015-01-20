@@ -37,6 +37,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.fdi.iw.model.User;
 
+
+/**
+ * Observaciones: Donde tengais ubicado vuestra app debeis crear una carpeta con el nombre 
+ * data(por ejemplo) que a su vez contenga otra que se llame editorial. En editorial estarán las
+ * fotos de esa categoría. El procedimiento es igual para todas las fotos de las distintas categorías.
+ * Esto vale para cargar las fotos con un for each. 
+ */
+
+
 /**
  * Handles requests for the application home page.
  */
@@ -180,9 +189,6 @@ public class HomeController {
 
 	@RequestMapping(value = "/citas", method = RequestMethod.POST)
 	public String citas(HttpServletRequest request, Model model, HttpSession session) {	
-
-		
-		
 		return "citas";
 	}
 	
@@ -210,8 +216,6 @@ public class HomeController {
 
 		} else {
 
-
-
 		}
 
 
@@ -235,10 +239,62 @@ public class HomeController {
 	public String galleryEditorial(Locale locale, Model model) {	
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Editorial");
-
+		// leemos los archivos que esten contenidos en la carpeta editorial...
+		File f = ContextInitializer.getFolder("editorial");
+		// 
+		model.addAttribute("fotos", f.list());
 		return "galleryEditorial";
 	}
 
+
+	/**
+	 * Método empleado para subir las fotos a la web
+	 * @param id of user 
+	 * @param photo to upload
+	 * @return
+	 */
+	@RequestMapping(value="/user", method=RequestMethod.POST)
+    public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
+    		@RequestParam("id") String id){
+        if (!photo.isEmpty()) {
+            try {
+                byte[] bytes = photo.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(
+                        		new FileOutputStream(ContextInitializer.getFile("user", id)));
+                stream.write(bytes);
+                stream.close();
+                return "You successfully uploaded " + id + 
+                		" into " + ContextInitializer.getFile("user", id).getAbsolutePath() + "!";
+            } catch (Exception e) {
+                return "You failed to upload " + id + " => " + e.getMessage();
+            }
+        } else {
+            return "You failed to upload a photo for " + id + " because the file was empty.";
+        }
+    }
+	
+	
+	/**
+	 * Returns a users' photo
+	 * @param id id of user to get photo from
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/photo", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] userPhoto(@RequestParam("folder") String folder, @RequestParam("id") String id) throws IOException {
+	    File f = ContextInitializer.getFile(folder, id);
+	    InputStream in = null;
+	    if (f.exists()) {
+	    	in = new BufferedInputStream(new FileInputStream(f));
+	    } else {
+	    	in = new BufferedInputStream(
+	    			this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
+	    }
+	    
+	    return IOUtils.toByteArray(in);
+	}
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */

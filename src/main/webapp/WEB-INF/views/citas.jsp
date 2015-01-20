@@ -44,7 +44,7 @@
 </form>
   </c:when>
    <c:otherwise>
-   <h5><b>Registrese para poder pedir una cita.</b></h5>
+   <h5><b>Regístrese para poder pedir una cita.</b></h5>
        </c:otherwise>
     </c:choose>
 	

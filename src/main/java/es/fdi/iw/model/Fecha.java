@@ -10,10 +10,11 @@ import javax.persistence.*;
  */
 
 
-@NamedQueries({
+/*@NamedQueries({
     @NamedQuery(name="fechaByUser",
         query="SELECT f FROM Fecha f  WHERE f.FechaIni >= :loginParamIni or f.FechaFin <= :loginParamFin)")
 })
+*/
 
 @Entity
 public class Fecha {
