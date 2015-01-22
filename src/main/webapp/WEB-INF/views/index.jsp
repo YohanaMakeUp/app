@@ -1,14 +1,14 @@
 <%@ include file="../fragments/header.jspf"%>
 
 <script>
-jQuery.noConflict()(function ($) {
-    $('#ei-slider').eislideshow({
-        animation: 'center',
-        autoplay: true,
-        slideshow_interval: 3000,
-        titlesFactor: 0
-    });
-});
+	jQuery.noConflict()(function($) {
+		$('#ei-slider').eislideshow({
+			animation : 'center',
+			autoplay : true,
+			slideshow_interval : 3000,
+			titlesFactor : 0
+		});
+	});
 </script>
 
 <div class="wrapper">
@@ -53,23 +53,25 @@ jQuery.noConflict()(function ($) {
 		</h5>
 		<c:choose>
 			<c:when test="${user.getRole() == 'Admin' and not empty user}">
-				<button
+				 
+				 <button 
 					onclick='getElementById("tituloIndex").innerHTML=getElementById("nuevoTituloIndex").value'>Cambiar
 					Titulo</button>
 				<input id="nuevoTituloIndex" name="nuevoTituloIndex" type="text">
 				<br>
 			</c:when>
 		</c:choose>
-		<h5 id="tituloIndexDos">Editorial, Moda/Belleza, Producción Gráfica, Rodaje
-			Publicitario, Celebrities, Pasarela, Eventos, Asesoramiento, Novias,
-			Automaquillaje.</h5>
+		<h5 id="tituloIndexDos">Editorial, Moda/Belleza, Producción
+			Gráfica, Rodaje Publicitario, Celebrities, Pasarela, Eventos,
+			Asesoramiento, Novias, Automaquillaje.</h5>
 	</div>
 	<c:choose>
 		<c:when test="${user.getRole() eq 'Admin' and not empty user}">
 			<button
 				onclick='getElementById("tituloIndexDos").innerHTML=getElementById("nuevoTituloIndexDos").value'>Cambiar
 				Titulo</button>
-			<input id="nuevoTituloIndexDos" name="nuevoTituloIndexDos" type="text">
+			<input id="nuevoTituloIndexDos" name="nuevoTituloIndexDos"
+				type="text">
 			<br>
 		</c:when>
 	</c:choose>

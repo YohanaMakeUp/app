@@ -9,12 +9,20 @@ import javax.persistence.*;
  *
  */
 
-
-/*@NamedQueries({
-    @NamedQuery(name="fechaByUser",
-        query="SELECT f FROM Fecha f  WHERE f.FechaIni >= :loginParamIni or f.FechaFin <= :loginParamFin)")
+@NamedQueries({
+	@NamedQuery(name="fechasQueSolapan",
+			query="SELECT f FROM Fecha f WHERE "
+					+ "("
+					+ "f.fechaIni >= :fechaInicialCita and "
+					+ "f.fechaFin <= :fechaInicialCita"
+					+ ") or ("
+					+ "f.fechaIni >= :fechaFinalCita and "
+					+ "f.fechaFin <= :fechaFinalCita"
+					+ ") or ("
+					+ "f.fechaIni >= :fechaInicialCita and "
+					+ "f.fechaIni <= :fechaFinalCita"
+					+ ")")
 })
-*/
 
 @Entity
 public class Fecha {
@@ -24,66 +32,47 @@ public class Fecha {
 	private Integer id;
 	@Version
 	private int version;
-	
+
 	private Date fechaIni, fechaFin;
-	
+
 	@ManyToOne (fetch=FetchType.EAGER)
 	private User user;
-	
-	
-	
+
 	public Integer getId() {
 		return id;
 	}
-
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
-
 	public int getVersion() {
 		return version;
 	}
-
-
 
 	public void setVersion(int version) {
 		this.version = version;
 	}
 
-
-
 	public Date getFechaIni() {
 		return fechaIni;
 	}
-
-
 
 	public void setFechaIni(Date fechaIni) {
 		this.fechaIni = fechaIni;
 	}
 
-
-
 	public Date getFechaFin() {
 		return fechaFin;
 	}
-
-
 
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
-
-
 	public User getUser() {
 		return user;
 	}
-
 
 
 	public void setUser(User user) {
@@ -91,15 +80,14 @@ public class Fecha {
 	}
 
 
-
 	public Fecha(Date fechaIni, Date fechaFin) {
-		
+
 		this.fechaIni = fechaIni;
 		this.fechaFin = fechaFin;
-		
-		
+
+
 	}
-   
+
 	public Fecha() {}
-	
+
 }

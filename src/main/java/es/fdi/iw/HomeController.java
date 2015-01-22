@@ -39,10 +39,7 @@ import es.fdi.iw.model.User;
 
 
 /**
- * Observaciones: Donde tengais ubicado vuestra app debeis crear una carpeta con el nombre 
- * data(por ejemplo) que a su vez contenga otra que se llame editorial. En editorial estarán las
- * fotos de esa categoría. El procedimiento es igual para todas las fotos de las distintas categorías.
- * Esto vale para cargar las fotos con un for each. 
+ * Observaciones: La web solo muestra correctamente las citas usando Chrome.
  */
 
 

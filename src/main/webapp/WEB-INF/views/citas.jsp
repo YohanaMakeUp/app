@@ -1,25 +1,27 @@
 <%@ include file="../fragments/header.jspf" %>
 
-<script src="https:\\code.jquery.com/jquery-1.10.2.js"></script> 
+<script src="https:\\code.jquery.com/jquery-1.10.2.js"></script>
+<!--  Proporciona el calendario , importante -->
 <script src="https:\\code.jquery.com/ui/1.11.2/jquery-ui.js"></script> 
+<!--  Mantienen el formato actual -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 
  <script>
   $(function() {
-    $( "#from" ).datepicker({
+	  $( "#from" ).datepicker({
       defaultDate: "+1w",
       changeMonth: true,
       numberOfMonths: 1,
       onClose: function( selectedDate ) {
-        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+    	  $( "#to" ).datepicker( "option", "minDate", selectedDate );
       }
     });
-    $( "#to" ).datepicker({
+	  $( "#to" ).datepicker({
       defaultDate: "+1w",
       changeMonth: true,
       numberOfMonths: 1,
       onClose: function( selectedDate ) {
-        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+    	  $( "#from" ).datepicker( "option", "maxDate", selectedDate );
       }
     });
   });
