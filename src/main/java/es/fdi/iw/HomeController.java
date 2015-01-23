@@ -130,7 +130,8 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
 		 */
-
+		File f = ContextInitializer.getFolder("index");
+		model.addAttribute("fotos", f.list());
 		return "index";
 	}	
 
@@ -139,7 +140,8 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Home");
 
-
+		File f = ContextInitializer.getFolder("index");
+		model.addAttribute("fotos", f.list());
 
 		return "index";
 	}	
@@ -152,6 +154,8 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Bio");
 
+		File f = ContextInitializer.getFolder("bio");
+		model.addAttribute("fotos", f.list());
 		return "bio";
 	}
 
@@ -163,6 +167,8 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Cinema");
 
+		File f = ContextInitializer.getFolder("cinema");
+		model.addAttribute("fotos", f.list());
 		return "cinema";
 	}
 
@@ -176,8 +182,8 @@ public class HomeController {
 
 		return "citas";
 	}
-	
-	
+
+
 	private boolean rangoDeFechas(Date fechaIni, Date fechaFin) {
 		return entityManager.createNamedQuery("fechaByUser")
 				.setParameter("loginParamIni", fechaIni).setParameter("loginParamFin", fechaFin)
@@ -188,7 +194,7 @@ public class HomeController {
 	public String citas(HttpServletRequest request, Model model, HttpSession session) {	
 		return "citas";
 	}
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -226,6 +232,9 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Celebrities");
 
+		File f = ContextInitializer.getFolder("celebrities");
+		model.addAttribute("fotos", f.list());
+
 		return "galleryCelebrities";
 	}
 
@@ -238,7 +247,7 @@ public class HomeController {
 		model.addAttribute("pageTitle", "Editorial");
 		// leemos los archivos que esten contenidos en la carpeta editorial...
 		File f = ContextInitializer.getFolder("editorial");
-		// 
+
 		model.addAttribute("fotos", f.list());
 		return "galleryEditorial";
 	}
@@ -251,27 +260,27 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value="/user", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
-    		@RequestParam("id") String id){
-        if (!photo.isEmpty()) {
-            try {
-                byte[] bytes = photo.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(
-                        		new FileOutputStream(ContextInitializer.getFile("user", id)));
-                stream.write(bytes);
-                stream.close();
-                return "You successfully uploaded " + id + 
-                		" into " + ContextInitializer.getFile("user", id).getAbsolutePath() + "!";
-            } catch (Exception e) {
-                return "You failed to upload " + id + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload a photo for " + id + " because the file was empty.";
-        }
-    }
-	
-	
+	public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
+			@RequestParam("id") String id){
+		if (!photo.isEmpty()) {
+			try {
+				byte[] bytes = photo.getBytes();
+				BufferedOutputStream stream =
+						new BufferedOutputStream(
+								new FileOutputStream(ContextInitializer.getFile("user", id)));
+				stream.write(bytes);
+				stream.close();
+				return "You successfully uploaded " + id + 
+						" into " + ContextInitializer.getFile("user", id).getAbsolutePath() + "!";
+			} catch (Exception e) {
+				return "You failed to upload " + id + " => " + e.getMessage();
+			}
+		} else {
+			return "You failed to upload a photo for " + id + " because the file was empty.";
+		}
+	}
+
+
 	/**
 	 * Returns a users' photo
 	 * @param id id of user to get photo from
@@ -280,18 +289,18 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value="/photo", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] userPhoto(@RequestParam("folder") String folder, @RequestParam("id") String id) throws IOException {
-	    File f = ContextInitializer.getFile(folder, id);
-	    InputStream in = null;
-	    if (f.exists()) {
-	    	in = new BufferedInputStream(new FileInputStream(f));
-	    } else {
-	    	in = new BufferedInputStream(
-	    			this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
-	    }
-	    
-	    return IOUtils.toByteArray(in);
+		File f = ContextInitializer.getFile(folder, id);
+		InputStream in = null;
+		if (f.exists()) {
+			in = new BufferedInputStream(new FileInputStream(f));
+		} else {
+			in = new BufferedInputStream(
+					this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
+		}
+
+		return IOUtils.toByteArray(in);
 	}
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -299,6 +308,9 @@ public class HomeController {
 	public String galleryEventos(Locale locale, Model model) {	
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Eventos");
+
+		File f = ContextInitializer.getFolder("eventos");
+		model.addAttribute("fotos", f.list());
 
 		return "galleryEventos";
 	}
@@ -311,6 +323,9 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Moda y Belleza");
 
+		File f = ContextInitializer.getFolder("belleza");
+		model.addAttribute("fotos", f.list());
+
 		return "galleryModaBelleza";
 	}
 
@@ -322,6 +337,9 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Novias");
 
+		File f = ContextInitializer.getFolder("novias");
+		model.addAttribute("fotos", f.list());
+
 		return "galleryNovias";
 	}
 
@@ -331,6 +349,9 @@ public class HomeController {
 	@RequestMapping(value = "/galleryProduccion", method = RequestMethod.GET)
 	public String galleryProduccion(Locale locale, Model model) {	
 		logger.info("Welcome home! The client locale is {}.", locale);
+
+		File f = ContextInitializer.getFolder("produccion");
+		model.addAttribute("fotos", f.list());
 
 		return "galleryProduccion";
 	}
@@ -359,7 +380,7 @@ public class HomeController {
 		try {
 
 			u = (User) entityManager.createNamedQuery("userByLogin").setParameter("loginParam", formLogin).getSingleResult();
-	
+
 		} catch (NoResultException e) {
 
 			model.addAttribute("error", "Usuario no encontrado");
@@ -430,7 +451,7 @@ public class HomeController {
 			User user = new User( nombre, apellidos, email , nombreUsuario, password1, "user");
 			entityManager.persist(user);
 			session.setAttribute("user", user);
-			
+
 		}
 
 

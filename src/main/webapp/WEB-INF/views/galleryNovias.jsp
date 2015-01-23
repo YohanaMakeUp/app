@@ -2,64 +2,14 @@
 
 <h1 class="logo">Novias</h1>
 <div id="container">
-  <div class="one-fifth">
-    <p> <a title="Caption Text" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth last">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
- <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth last">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-   <div class="one-fifth last">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
- <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
- <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
- <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
-  <div class="one-fifth last">
-    <p> <a title="" href="slideshow/slide_2.jpg" class="portfolio-item-preview" data-rel="prettyPhoto"><img src="resources/img/portfolio/portfolio-img-01.jpg" alt="" width="158" height="100" class="portfolio-img pretty-box"></a> </p>
-  </div>
+  <c:forEach items="${fotos}" var="f">
+	<div class="one-fifth">
+    	<p> 
+       <!-- Cambiamos la ruta a la nueva carpeta -->
+    		<a title="" href="photo/?folder=novias&id=${f}" 
+    			class="portfolio-item-preview" data-rel="prettyPhoto">
+    		<img src="photo/?folder=novias&id=${f}" alt="" width="158" height="100" 
+    			class="portfolio-img pretty-box"></a> </p>
+  	</div>
+  </c:forEach>
 </div>

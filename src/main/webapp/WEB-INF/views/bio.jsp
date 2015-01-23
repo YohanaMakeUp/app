@@ -21,8 +21,16 @@
 			incluye versiones de Lorem Ipsum.</p>
 	</div>
 	<div style="margin-left: -19px; margin-bottom: 15px;">
-		<img title="" src="resources/img/slideshow/slide_2.jpg" alt=""
-			width="600" height="450">
+		<c:forEach items="${fotos}" var="f">
+			<div class="one-fifth">
+				<p>
+					<a title="" href="photo/?folder=bio&id=${f}"
+						class="portfolio-item-preview" data-rel="prettyPhoto"> <img
+						src="photo/?folder=bio&id=${f}" alt="" width="600" height="450"
+						class="portfolio-img pretty-box"></a>
+				</p>
+			</div>
+		</c:forEach>
 	</div>
 	<c:choose>
 		<c:when test="${user.getRole() == 'Admin' and not empty user}">
