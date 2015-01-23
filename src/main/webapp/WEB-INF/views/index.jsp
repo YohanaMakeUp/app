@@ -48,8 +48,8 @@
 <div id="container" style="box-shadow: none; border: none">
 	<div class="none">
 		<h5 id="tituloIndex">
-			<b>Yohana Moreno Rojas, profesional dedicada al mundo del
-				maquillaje y la peluqueria.</b>
+			Yohana Moreno Rojas, profesional dedicada al mundo del
+				maquillaje y la peluqueria.
 		</h5>
 		<c:choose>
 			<c:when test="${user.getRole() == 'Admin' and not empty user}">
