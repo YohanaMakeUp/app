@@ -16,6 +16,7 @@ import javax.persistence.Version;
     @NamedQuery(name="userByLogin",
         query="select u from User u where u.alias = :loginParam")
 })
+
 @Entity
 public class User {
 	

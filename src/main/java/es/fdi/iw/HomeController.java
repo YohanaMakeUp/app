@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.fdi.iw.model.FragIndex;
 import es.fdi.iw.model.User;
 
 
@@ -134,12 +135,24 @@ public class HomeController {
 		return "index";
 	}	
 
+	@Transactional
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(Locale locale, Model model) {	
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Home");
-
-
+		
+		String titulo, texto, aux; 
+		
+		if(entityManager.createNamedQuery("dameTexto").getResultList().size() != 0){
+			
+			FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
+			
+			model.addAttribute("titulo", f);
+			model.addAttribute("texto", f);
+		//	entityManager.createNamedQuery("borraTexto");
+		}
+		
+		
 
 		return "index";
 	}	

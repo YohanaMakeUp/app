@@ -15,6 +15,6 @@
 	<!-- validate = solo valida, no da fallo si ya existen las tablas
 		 create = crea las tablas, da fallo si ya existen 
 		 create and drop = borra las tablas existentes y las crea de cero-->
-	<property name="hibernate.hbm2ddl.auto">create</property> 
+	<property name="hibernate.hbm2ddl.auto">validate</property> 
 </session-factory>
 </hibernate-configuration>
