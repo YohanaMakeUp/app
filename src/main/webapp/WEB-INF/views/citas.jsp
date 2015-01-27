@@ -2,9 +2,9 @@
 
 <script src="https:\\code.jquery.com/jquery-1.10.2.js"></script>
 <!--  Proporciona el calendario , importante -->
-<script src="https:\\code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="https:\\code.jquery.com/ui/1.11.2/jquery-ui.js"></script> 
 <!--  Mantienen el formato actual -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 
  <script>
   $(function() {
@@ -25,7 +25,6 @@
       }
     });
   });
- 
   </script>
 <h1 class="logo">Citas</h1>
 <div id="container">
