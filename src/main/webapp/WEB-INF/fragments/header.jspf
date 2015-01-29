@@ -76,7 +76,7 @@ jQuery(function(){
     <li><a href="contacto">Contacto</a></li>
     <c:choose>
     <c:when test="${not empty user}">
-     <li><h6>${user.getNombre()}</h6></li>
+     <li><h6>${user.getNombreUsuario()}</h6></li>
     <li class="last"><a href="${prefix}logout">Log Out</a></li>
     </c:when>
     <c:otherwise>

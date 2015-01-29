@@ -2,7 +2,13 @@ package es.fdi.iw.model;
 
 import javax.persistence.*;
 
+@NamedQueries({
+    @NamedQuery(name="dameTextoBio",
+        query="SELECT t FROM FragBio t")   
+})
+
 @Entity
+@Table(name = "FragBio")
 public class FragBio {
 
 	@Id

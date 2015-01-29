@@ -80,14 +80,15 @@ public class Fecha {
 	}
 
 
-	public Fecha(Date fechaIni, Date fechaFin) {
+	public Fecha(Date fechaIni, Date fechaFin, User user) {
 
 		this.fechaIni = fechaIni;
 		this.fechaFin = fechaFin;
-
+		this.user = user;
 
 	}
 
 	public Fecha() {}
+
 
 }

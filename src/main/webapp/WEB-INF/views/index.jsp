@@ -54,11 +54,13 @@
 		</h5>
 		<c:choose>
 			<c:when test="${user.getRole() == 'Admin' and not empty user}">
-				 
-				 <button 
+				 <form action="index" id="formularioEditarIndex" method="POST">
+				<!-- <button 
 					onclick='getElementById("tituloIndex").innerHTML=getElementById("nuevoTituloIndex").value'>Cambiar
-					Titulo</button>
-				<input id="nuevoTituloIndex" name="nuevoTituloIndex" type="text">
+					Titulo</button>-->
+					<label>Cambiar Titulo</label><input name ="nuevoTituloIndex" type="text">
+					<input id="nuevoTituloIndex" name="Confirmar"type="submit">
+				</form>
 				<br>
 			</c:when>
 		</c:choose>
@@ -72,11 +74,14 @@
 	</div>
 	<c:choose>
 		<c:when test="${user.getRole() eq 'Admin' and not empty user}">
-			<button
+			
+		<form action="index" id="formularioEditarIndexDos" method="POST">
+			<!--  <button
 				onclick='getElementById("tituloIndexDos").innerHTML=getElementById("nuevoTituloIndexDos").value'>Cambiar
-				Titulo</button>
-			<input id="nuevoTituloIndexDos" name="nuevoTituloIndexDos"
-				type="text">
+				Titulo</button>-->
+				<label>Cambiar Texto</label><input name ="nuevoTituloIndexDos" type="text">
+			<input id="nuevoTituloIndexDos" name="Confirmar"type="submit">
+				</form>
 			<br>
 		</c:when>
 	</c:choose>

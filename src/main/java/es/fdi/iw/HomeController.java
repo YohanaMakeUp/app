@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.fdi.iw.model.Fecha;
+import es.fdi.iw.model.FragBio;
 import es.fdi.iw.model.FragIndex;
 import es.fdi.iw.model.User;
 
@@ -125,12 +129,14 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Home");
 
-		/*
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
-		model.addAttribute("serverTime", formattedDate );
-		 */
+		
+		if(entityManager.createNamedQuery("dameTexto").getResultList().size() != 0){
+
+			FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
+
+			model.addAttribute("titulo", f);
+			model.addAttribute("texto", f);
+		}
 
 		return "index";
 	}	
@@ -140,23 +146,63 @@ public class HomeController {
 	public String index(Locale locale, Model model) {	
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Home");
-		
-		String titulo, texto, aux; 
-		
+
 		if(entityManager.createNamedQuery("dameTexto").getResultList().size() != 0){
-			
+
 			FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
-			
+
 			model.addAttribute("titulo", f);
 			model.addAttribute("texto", f);
-		//	entityManager.createNamedQuery("borraTexto");
 		}
-		
-		
 
 		return "index";
 	}	
 
+
+	@Transactional
+	@RequestMapping(value = "/index", method = RequestMethod.POST)
+	public String index(HttpServletRequest request, Model model, HttpSession session) {	
+
+		String titulo = request.getParameter("nuevoTituloIndex");
+		String texto= request.getParameter("nuevoTituloIndexDos");
+
+		
+		if(entityManager.createNamedQuery("dameTexto").getResultList().size() != 0){
+
+			FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
+
+			model.addAttribute("titulo", f);
+			model.addAttribute("texto", f);
+		}
+		
+		FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
+
+		if (texto != null && titulo !=null) {
+
+			f.setTitulo(titulo);
+			f.setTexto(texto);
+			entityManager.persist(f);
+
+		}
+		else{ 
+
+			if (titulo != null) {
+
+				f.setTitulo(titulo);
+				entityManager.persist(f);
+
+			}
+
+			if (texto != null) {
+
+				f.setTexto(texto);
+				entityManager.persist(f);
+			}
+		}
+
+		return "index";
+	}	
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -165,8 +211,62 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Bio");
 
+		if(entityManager.createNamedQuery("dameTextoBio").getResultList().size() != 0){
+
+			FragBio f = (FragBio) entityManager.createNamedQuery("dameTextoBio").getSingleResult();
+
+			model.addAttribute("titulo", f);
+			model.addAttribute("texto", f);
+		}
+		
 		return "bio";
 	}
+	
+	@Transactional
+	@RequestMapping(value = "/bio", method = RequestMethod.POST)
+	public String bio(HttpServletRequest request, Model model, HttpSession session) {	
+
+		String titulo = request.getParameter("nuevoTitulo");
+		String texto= request.getParameter("nuevaDescripcion");
+
+		
+		if(entityManager.createNamedQuery("dameTextoBio").getResultList().size() != 0){
+
+			FragBio f = (FragBio) entityManager.createNamedQuery("dameTextoBio").getSingleResult();
+
+			model.addAttribute("titulo", f);
+			model.addAttribute("texto", f);
+		}
+		
+		FragBio f = (FragBio) entityManager.createNamedQuery("dameTextoBio").getSingleResult();
+
+		if (texto != null && titulo !=null) {
+
+			f.setTitulo(titulo);
+			f.setTexto(texto);
+			entityManager.persist(f);
+
+		}
+		else{ 
+
+			if (titulo != null) {
+
+				f.setTitulo(titulo);
+				entityManager.persist(f);
+
+			}
+
+			if (texto != null) {
+
+				f.setTexto(texto);
+				entityManager.persist(f);
+			}
+		}
+
+		return "bio";
+	}	
+	
+	
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -187,21 +287,40 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Citas");
 
+		ArrayList<User> listaUsuarios = (ArrayList<User>) entityManager.createNamedQuery("dameTodo").getResultList();
+		
+		
+		model.addAttribute("users", listaUsuarios);
+		
 		return "citas";
-	}
-	
-	
-	private boolean rangoDeFechas(Date fechaIni, Date fechaFin) {
-		return entityManager.createNamedQuery("fechaByUser")
-				.setParameter("loginParamIni", fechaIni).setParameter("loginParamFin", fechaFin)
-				.getResultList().size() == 0;
 	}
 
+	@Transactional
 	@RequestMapping(value = "/citas", method = RequestMethod.POST)
 	public String citas(HttpServletRequest request, Model model, HttpSession session) {	
+		
+		String fechaIni = request.getParameter("from");
+		String fechaFin= request.getParameter("to");
+		
+		 SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+	        Date parsed = null;
+	        Date parsed2 = null;
+			try {
+				parsed = format.parse(fechaIni);
+				parsed2 = format.parse(fechaFin);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	         
+		Fecha f = new Fecha(new java.sql.Date(parsed.getTime()), new java.sql.Date(parsed2.getTime()), (User) session.getAttribute("user"));
+		
+		entityManager.persist(f);
+		
+		
 		return "citas";
 	}
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -264,27 +383,27 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value="/user", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
-    		@RequestParam("id") String id){
-        if (!photo.isEmpty()) {
-            try {
-                byte[] bytes = photo.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(
-                        		new FileOutputStream(ContextInitializer.getFile("user", id)));
-                stream.write(bytes);
-                stream.close();
-                return "You successfully uploaded " + id + 
-                		" into " + ContextInitializer.getFile("user", id).getAbsolutePath() + "!";
-            } catch (Exception e) {
-                return "You failed to upload " + id + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload a photo for " + id + " because the file was empty.";
-        }
-    }
-	
-	
+	public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
+			@RequestParam("id") String id){
+		if (!photo.isEmpty()) {
+			try {
+				byte[] bytes = photo.getBytes();
+				BufferedOutputStream stream =
+						new BufferedOutputStream(
+								new FileOutputStream(ContextInitializer.getFile("user", id)));
+				stream.write(bytes);
+				stream.close();
+				return "You successfully uploaded " + id + 
+						" into " + ContextInitializer.getFile("user", id).getAbsolutePath() + "!";
+			} catch (Exception e) {
+				return "You failed to upload " + id + " => " + e.getMessage();
+			}
+		} else {
+			return "You failed to upload a photo for " + id + " because the file was empty.";
+		}
+	}
+
+
 	/**
 	 * Returns a users' photo
 	 * @param id id of user to get photo from
@@ -293,18 +412,18 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value="/photo", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] userPhoto(@RequestParam("folder") String folder, @RequestParam("id") String id) throws IOException {
-	    File f = ContextInitializer.getFile(folder, id);
-	    InputStream in = null;
-	    if (f.exists()) {
-	    	in = new BufferedInputStream(new FileInputStream(f));
-	    } else {
-	    	in = new BufferedInputStream(
-	    			this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
-	    }
-	    
-	    return IOUtils.toByteArray(in);
+		File f = ContextInitializer.getFile(folder, id);
+		InputStream in = null;
+		if (f.exists()) {
+			in = new BufferedInputStream(new FileInputStream(f));
+		} else {
+			in = new BufferedInputStream(
+					this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
+		}
+
+		return IOUtils.toByteArray(in);
 	}
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -372,7 +491,7 @@ public class HomeController {
 		try {
 
 			u = (User) entityManager.createNamedQuery("userByLogin").setParameter("loginParam", formLogin).getSingleResult();
-	
+
 		} catch (NoResultException e) {
 
 			model.addAttribute("error", "Usuario no encontrado");
@@ -443,7 +562,7 @@ public class HomeController {
 			User user = new User( nombre, apellidos, email , nombreUsuario, password1, "user");
 			entityManager.persist(user);
 			session.setAttribute("user", user);
-			
+
 		}
 
 

@@ -14,7 +14,9 @@ import javax.persistence.Version;
 
 @NamedQueries({
     @NamedQuery(name="userByLogin",
-        query="select u from User u where u.alias = :loginParam")
+        query="select u from User u where u.alias = :loginParam"),
+        @NamedQuery(name="dameTodo",
+        query="select u from User u")
 })
 
 @Entity

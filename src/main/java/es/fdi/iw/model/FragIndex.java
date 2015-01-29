@@ -16,10 +16,7 @@ import javax.persistence.Version;
 
 @NamedQueries({
     @NamedQuery(name="dameTexto",
-        query="SELECT t FROM FragIndex t")//, 
-        
-   //     @NamedQuery(name="borraTexto",
-      //  query="DELETE FROM FRAGINDEX")    
+        query="SELECT t FROM FragIndex t")   
 })
 
 
