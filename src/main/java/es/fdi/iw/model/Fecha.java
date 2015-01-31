@@ -21,7 +21,10 @@ import javax.persistence.*;
 					+ ") or ("
 					+ "f.fechaIni >= :fechaInicialCita and "
 					+ "f.fechaIni <= :fechaFinalCita"
-					+ ")")
+					+ ")"),
+					
+					@NamedQuery(name="dameFechas",
+					query="SELECT f FROM Fecha f")
 })
 
 @Entity

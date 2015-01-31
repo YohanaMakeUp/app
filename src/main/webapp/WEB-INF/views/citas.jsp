@@ -10,27 +10,53 @@
 
 
 <script>
+$(function() {
+	$(".x").click(function(){
+		var id=$(this).attr("id").substring("del_".length);
+		console.log("deleting", id);
+		delUser(id);
+	});
+});
 
+function delUser(id) {
+	$.post("delFecha", {id: id, csrf: "${e:forJavaScript(csrf_token)}"},
+		function(data) {
+			$("#del_"+id).parent().parent().remove();
+	});
+}
 
 var diasChungos = new Array();
 
+
 for (var i = 0; i < 365; i++) {
-	
+ 
  diasChungos[i] = false; 
+
 };
  
   $(function() {
+	  
+	 	var date1 = '${citasPrueba}';
+	//	date1.setHours(0, 0, 0, 0);
+	//	date1.setDate('${citas.get(0).getFechaIni()}');
+		var date2 = '${citasPrueba2}';
+	//	date2.setHours(0, 0, 0, 0);
+	//	date2.setDate('${citas.get(0).getFechaFin()}');
+	  
 	  $( "#from" ).datepicker({
 		  
 		  
-		  beforeShowDay: function(date) {
+	/*	  beforeShowDay: function(date) {
 	            console.log(date.getDate(), diasChungos[date.getDate()]);
 	             if (!diasChungos[date.getDate()]) {
 	              return [true, 'muchaLuz', 'tooltipText'];
 	             } else {
 	                  return [false, '', ''];
 	             }
-		  },
+		  }*/
+		  beforeShowDay: function(date) {
+				return [date < date1 || date > date2, ""];
+			},
 		  
       defaultDate: "+1w",
       changeMonth: true,
@@ -44,15 +70,17 @@ for (var i = 0; i < 365; i++) {
 	  
 	  $( "#to" ).datepicker({
 		  
-		  beforeShowDay: function(date) {
+		/*  beforeShowDay: function(date) {
 	          console.log(date.getDate(), diasChungos[date.getDate()]);
 	          if (!diasChungos[date.getDate()]) {
 	           return [true, 'muchaLuz', 'tooltipText'];
 	          } else {
 	               return [false, '', ''];
 	          }
-	        },
-		  
+	        },*/
+	        beforeShowDay: function(date) {
+				return [date < date1 || date > date2, ""];
+			},
 		  
 		  
       defaultDate: "+1w",
@@ -64,13 +92,15 @@ for (var i = 0; i < 365; i++) {
     });
   });
   </script>
+  
+  
 <h1 class="logo">Citas</h1>
 <div id="container">
 	<div class="content">
 		<div id="fane1">
 
 			<c:choose>
-				<c:when test="${not empty user}">
+				<c:when test="${user.getRole() eq 'user' and  not empty user}">
 					<form action="citas" id="formularioRegistro" method="POST">
 
 						<label for="from">From</label> <input type="text" id="from"
@@ -79,15 +109,30 @@ for (var i = 0; i < 365; i++) {
 							value="Enviar formulario"> <input type="button"
 							value="Resetear Formulario" onClick="this.form.reset()">
 					</form>
-					
-					
 				</c:when>				
 				<c:when test="${user.getRole() eq 'Admin' and not empty user}">
-				<textarea>
-				<c:forEach items="${users}" var="f">
-					Nombre:${f.getNombre()} Apellido:${f.getApellidos()} Nombre de Usuario:${f.getNombreUsuario()} Cita:${f.getFechas()}
+				<table style="width:100%">
+				<tr>
+				<th> Nombre</th>
+				<th> Apellido</th>
+				<th> Usuario</th>
+				<th> Email</th>
+				<th> Desde</th>
+				<th> Hasta</th>
+				</tr>
+				
+				<c:forEach items="${citas}" var="c">
+				
+				<tr>
+				<td>${c.user.nombre}
+				<td>${c.user.apellidos}
+				<td>${c.user.nombreUsuario}
+				<td>${c.user.email}
+				<td>${c.fechaIni}
+				<td>${c.fechaFin}
+				<td><button class="x" id="del_${u.id}">x</button></tr>
 				</c:forEach>
-				</textarea>
+				</table>
 				</c:when>
 				<c:otherwise>
 					<h5>
@@ -95,9 +140,6 @@ for (var i = 0; i < 365; i++) {
 					</h5>
 				</c:otherwise>
 			</c:choose>
-			
-				
-
 		</div>
 	</div>
 	<div style="clear: both"></div>

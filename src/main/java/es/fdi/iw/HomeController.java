@@ -129,7 +129,7 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Home");
 
-		
+
 		if(entityManager.createNamedQuery("dameTexto").getResultList().size() != 0){
 
 			FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
@@ -166,7 +166,7 @@ public class HomeController {
 		String titulo = request.getParameter("nuevoTituloIndex");
 		String texto= request.getParameter("nuevoTituloIndexDos");
 
-		
+
 		if(entityManager.createNamedQuery("dameTexto").getResultList().size() != 0){
 
 			FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
@@ -174,7 +174,7 @@ public class HomeController {
 			model.addAttribute("titulo", f);
 			model.addAttribute("texto", f);
 		}
-		
+
 		FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
 
 		if (texto != null && titulo !=null) {
@@ -202,7 +202,7 @@ public class HomeController {
 
 		return "index";
 	}	
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -218,10 +218,10 @@ public class HomeController {
 			model.addAttribute("titulo", f);
 			model.addAttribute("texto", f);
 		}
-		
+
 		return "bio";
 	}
-	
+
 	@Transactional
 	@RequestMapping(value = "/bio", method = RequestMethod.POST)
 	public String bio(HttpServletRequest request, Model model, HttpSession session) {	
@@ -229,7 +229,7 @@ public class HomeController {
 		String titulo = request.getParameter("nuevoTitulo");
 		String texto= request.getParameter("nuevaDescripcion");
 
-		
+
 		if(entityManager.createNamedQuery("dameTextoBio").getResultList().size() != 0){
 
 			FragBio f = (FragBio) entityManager.createNamedQuery("dameTextoBio").getSingleResult();
@@ -237,7 +237,7 @@ public class HomeController {
 			model.addAttribute("titulo", f);
 			model.addAttribute("texto", f);
 		}
-		
+
 		FragBio f = (FragBio) entityManager.createNamedQuery("dameTextoBio").getSingleResult();
 
 		if (texto != null && titulo !=null) {
@@ -265,8 +265,8 @@ public class HomeController {
 
 		return "bio";
 	}	
-	
-	
+
+
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -287,37 +287,39 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		model.addAttribute("pageTitle", "Citas");
 
-		ArrayList<User> listaUsuarios = (ArrayList<User>) entityManager.createNamedQuery("dameTodo").getResultList();
-		
-		
-		model.addAttribute("users", listaUsuarios);
+		ArrayList<Fecha> listaCitas = (ArrayList<Fecha>) entityManager.createNamedQuery("dameFechas").getResultList();			
+		model.addAttribute("citas", listaCitas);
+		model.addAttribute("citasPrueba", listaCitas.get(1).getFechaIni());
+		model.addAttribute("citasPrueba2", listaCitas.get(1).getFechaFin());
 		
 		return "citas";
 	}
 
+
+	
 	@Transactional
 	@RequestMapping(value = "/citas", method = RequestMethod.POST)
 	public String citas(HttpServletRequest request, Model model, HttpSession session) {	
-		
+
 		String fechaIni = request.getParameter("from");
 		String fechaFin= request.getParameter("to");
-		
-		 SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-	        Date parsed = null;
-	        Date parsed2 = null;
-			try {
-				parsed = format.parse(fechaIni);
-				parsed2 = format.parse(fechaFin);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	         
+
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		Date parsed = null;
+		Date parsed2 = null;
+		try {
+			parsed = format.parse(fechaIni);
+			parsed2 = format.parse(fechaFin);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		Fecha f = new Fecha(new java.sql.Date(parsed.getTime()), new java.sql.Date(parsed2.getTime()), (User) session.getAttribute("user"));
-		
+
 		entityManager.persist(f);
-		
-		
+
+
 		return "citas";
 	}
 

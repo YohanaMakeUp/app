@@ -4,7 +4,9 @@
   	- pageExtraCSS: additional CSS files to include (from resources/css; via link rel-stylesheet href)
   	- pageExtraScripts: additional JS files to include (from resources/js; via script src)
  --%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 
 <!DOCTYPE HTML>
 <head>
@@ -64,7 +66,7 @@ jQuery(function(){
       <ol>
         <li><a href="galleryEditorial">Editorial</a></li>
         <li><a href="galleryModaBelleza">Moda/Belleza</a></li>
-        <li><a href="galleryProduccion">ProducciÛn Gr·fica</a></li>
+        <li><a href="galleryProduccion">Producci√≥n Gr√°fica</a></li>
         <li><a href="galleryCelebrities">Celebrities</a></li>
         <li><a href="galleryEventos">Eventos</a></li>
         <li><a href="galleryNovias">Novias</a></li>
