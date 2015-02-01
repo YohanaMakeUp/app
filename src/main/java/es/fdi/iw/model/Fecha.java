@@ -13,14 +13,19 @@ import javax.persistence.*;
 	@NamedQuery(name="fechasQueSolapan",
 			query="SELECT f FROM Fecha f WHERE "
 					+ "("
-					+ "f.fechaIni >= :fechaInicialCita and "
-					+ "f.fechaFin <= :fechaInicialCita"
+					+ "f.fechaIni <= :fechaInicialCita and "
+					+ "f.fechaFin >= :fechaFinalCita"
 					+ ") or ("
-					+ "f.fechaIni >= :fechaFinalCita and "
+					+ "f.fechaIni >= :fechaInicialCita and "
 					+ "f.fechaFin <= :fechaFinalCita"
 					+ ") or ("
 					+ "f.fechaIni >= :fechaInicialCita and "
+					+ "f.fechaFin >= :fechaFinalCita and "
 					+ "f.fechaIni <= :fechaFinalCita"
+					+ ") or ("
+					+ "f.fechaIni <= :fechaInicialCita and "
+					+ "f.fechaFin <= :fechaFinalCita and "
+					+ "f.fechaFin >= :fechaInicialCita"
 					+ ")"),
 					
 					@NamedQuery(name="dameFechas",

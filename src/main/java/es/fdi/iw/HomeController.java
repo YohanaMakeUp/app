@@ -291,20 +291,6 @@ public class HomeController {
 
 		ArrayList<Fecha> listaCitas = (ArrayList<Fecha>) entityManager.createNamedQuery("dameFechas").getResultList();			
 		
-		ArrayList<ArrayList<Boolean>> arrayDias = new ArrayList<ArrayList<Boolean>>();
-		
-		for (int i = 0; i < 12; i++) {
-			
-				arrayDias.add(new ArrayList<Boolean>());
-			
-			for (int j = 0; j < 31; j++) {
-				
-				arrayDias.get(i).add(true);
-			}
-		}
-		
-		model.addAttribute("diasChungos", arrayDias);
-		
 		if (listaCitas.size() != 0) {
 			
 			model.addAttribute("citas", listaCitas);
@@ -318,7 +304,7 @@ public class HomeController {
 	@RequestMapping(value = "/delFecha", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional // needed to allow DB change
-	public ResponseEntity<String> bookAuthors(@RequestParam("id") int id,
+	public ResponseEntity<String> removeDates(@RequestParam("id") int id,
 			@RequestParam("csrf") String token, HttpSession session) {
 		
 //		if (! isTokenValid(session, token)) {
@@ -356,8 +342,23 @@ public class HomeController {
 
 		Fecha f = new Fecha(new java.sql.Date(parsed.getTime()), new java.sql.Date(parsed2.getTime()), (User) session.getAttribute("user"));
 
-		entityManager.persist(f);
-
+		if (entityManager.createNamedQuery("fechasQueSolapan").setParameter("fechaInicialCita", new java.sql.Date(parsed.getTime())).setParameter("fechaFinalCita", new java.sql.Date(parsed2.getTime())).getResultList().size() == 0) {
+			
+			entityManager.persist(f);
+			
+		}else{
+			
+			model.addAttribute("errorFecha", "La fecha que intenta solicitar no se encuentra disponible");
+			
+		}
+		
+		ArrayList<Fecha> listaCitas = (ArrayList<Fecha>) entityManager.createNamedQuery("dameFechas").getResultList();			
+		
+		if (listaCitas.size() != 0) {
+			
+			model.addAttribute("citas", listaCitas);
+	
+		}
 
 		return "citas";
 	}
