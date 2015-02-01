@@ -25,38 +25,55 @@ function delUser(id) {
 	});
 }
 
-var diasChungos = new Array();
+var diasChungos = new Array(12);
 
-
-for (var i = 0; i < 365; i++) {
- 
- diasChungos[i] = false; 
-
+for (var i = 0; i < 12; i++) {
+	
+	diasChungos[i] = new Array(31);
+	
+ for (var j = 0; j < 31; j++) {
+	
+ diasChungos[i][j] = '${diasChungos.get(i).get(j).booleanValue()}'; 
+ }
 };
  
   $(function() {
 	  
-	 	var date1 = '${citasPrueba}';
+	// 	var date1 = new Date('${citasPrueba}');
 	//	date1.setHours(0, 0, 0, 0);
 	//	date1.setDate('${citas.get(0).getFechaIni()}');
-		var date2 = '${citasPrueba2}';
+	//	var date2 = new Date('${citasPrueba2}');
 	//	date2.setHours(0, 0, 0, 0);
 	//	date2.setDate('${citas.get(0).getFechaFin()}');
+	
+	var size = '${citas.size()}';
 	  
+	
+	
 	  $( "#from" ).datepicker({
 		  
 		  
-	/*	  beforeShowDay: function(date) {
+		  beforeShowDay: function(date) {
 	            console.log(date.getDate(), diasChungos[date.getDate()]);
-	             if (!diasChungos[date.getDate()]) {
+	             if (diasChungos[date.getMonth()][date.getDate()]) {
 	              return [true, 'muchaLuz', 'tooltipText'];
 	             } else {
-	                  return [false, '', ''];
+	                  return [false, '', 'Fallo'];
 	             }
-		  }*/
-		  beforeShowDay: function(date) {
-				return [date < date1 || date > date2, ""];
-			},
+		  },
+		
+		  
+		/*  beforeShowDay: function(date) {
+			  
+			  for (var index = 0; index < size; index++) {
+					
+					var date1 = new Date('${citas.get(index).getFechaIni()}');
+					var date2 = new Date('${citas.get(index).getFechaFin()}');
+				return [date <= date1 || date >= date2, ""];
+				
+		  }
+			}
+				,*/
 		  
       defaultDate: "+1w",
       changeMonth: true,
@@ -70,17 +87,22 @@ for (var i = 0; i < 365; i++) {
 	  
 	  $( "#to" ).datepicker({
 		  
-		/*  beforeShowDay: function(date) {
+		  beforeShowDay: function(date) {
 	          console.log(date.getDate(), diasChungos[date.getDate()]);
-	          if (!diasChungos[date.getDate()]) {
+	          if (diasChungos[date.getMonth()][date.getDate()]) {
 	           return [true, 'muchaLuz', 'tooltipText'];
 	          } else {
-	               return [false, '', ''];
+	               return [false, '', 'Fallo'];
 	          }
-	        },*/
-	        beforeShowDay: function(date) {
-				return [date < date1 || date > date2, ""];
-			},
+	        },
+	     /*   beforeShowDay: function(date) {
+	        	 for (var index = 0; index < size; index++) {
+						
+						var date1 = new Date('${citas.get(index).getFechaIni()}');
+						var date2 = new Date('${citas.get(index).getFechaFin()}');
+				return [date <= date1 || date >= date2, ""];
+	        	 }
+			},*/
 		  
 		  
       defaultDate: "+1w",
@@ -90,6 +112,8 @@ for (var i = 0; i < 365; i++) {
     	  $( "#from" ).datepicker( "option", "maxDate", selectedDate );
       }
     });
+	  
+	
   });
   </script>
   
@@ -130,7 +154,7 @@ for (var i = 0; i < 365; i++) {
 				<td>${c.user.email}
 				<td>${c.fechaIni}
 				<td>${c.fechaFin}
-				<td><button class="x" id="del_${u.id}">x</button></tr>
+				<td><button class="x" id="del_${c.id}">x</button></tr>
 				</c:forEach>
 				</table>
 				</c:when>

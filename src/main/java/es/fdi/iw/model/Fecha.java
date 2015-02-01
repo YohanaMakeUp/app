@@ -24,7 +24,10 @@ import javax.persistence.*;
 					+ ")"),
 					
 					@NamedQuery(name="dameFechas",
-					query="SELECT f FROM Fecha f")
+					query="SELECT f FROM Fecha f"),
+					
+					@NamedQuery(name="delFecha",
+			    	query="delete from Fecha f where f.id= :idParam")
 })
 
 @Entity

@@ -28,7 +28,9 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -288,14 +290,51 @@ public class HomeController {
 		model.addAttribute("pageTitle", "Citas");
 
 		ArrayList<Fecha> listaCitas = (ArrayList<Fecha>) entityManager.createNamedQuery("dameFechas").getResultList();			
-		model.addAttribute("citas", listaCitas);
-		model.addAttribute("citasPrueba", listaCitas.get(1).getFechaIni());
-		model.addAttribute("citasPrueba2", listaCitas.get(1).getFechaFin());
+		
+		ArrayList<ArrayList<Boolean>> arrayDias = new ArrayList<ArrayList<Boolean>>();
+		
+		for (int i = 0; i < 12; i++) {
+			
+				arrayDias.add(new ArrayList<Boolean>());
+			
+			for (int j = 0; j < 31; j++) {
+				
+				arrayDias.get(i).add(true);
+			}
+		}
+		
+		model.addAttribute("diasChungos", arrayDias);
+		
+		if (listaCitas.size() != 0) {
+			
+			model.addAttribute("citas", listaCitas);
+	
+		}
+		
 		
 		return "citas";
 	}
 
-
+	@RequestMapping(value = "/delFecha", method = RequestMethod.POST)
+	@ResponseBody
+	@Transactional // needed to allow DB change
+	public ResponseEntity<String> bookAuthors(@RequestParam("id") int id,
+			@RequestParam("csrf") String token, HttpSession session) {
+		
+//		if (! isTokenValid(session, token)) {
+//			return new ResponseEntity<String>("Error: no such user or bad auth", 
+//					HttpStatus.FORBIDDEN);
+//		} else 
+			
+			if (entityManager.createNamedQuery("delFecha")
+				.setParameter("idParam", id).executeUpdate() == 1) {
+			return new ResponseEntity<String>("Ok: date " + id + " removed", 
+					HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("Error: no such user", 
+					HttpStatus.BAD_REQUEST);
+		}
+	}	
 	
 	@Transactional
 	@RequestMapping(value = "/citas", method = RequestMethod.POST)
@@ -588,5 +627,17 @@ public class HomeController {
 
 
 		return "registro";
+	}
+	
+	
+	/**
+	 * Checks the anti-csrf token for a session against a value
+	 * @param session
+	 * @param token
+	 * @return the token
+	 */
+	static boolean isTokenValid(HttpSession session, String token) {
+	    Object t=session.getAttribute("csrf_token");
+	    return (t != null) && t.equals(token);
 	}
 }
