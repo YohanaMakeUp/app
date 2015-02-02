@@ -6,7 +6,7 @@
 	<div class="one-fifth">
     	<p> 
        <!-- Cambiamos la ruta a la nueva carpeta -->
-    		<a title="Caption Text" href="photo/?folder=editorial&id=${f}" 
+    		<a title="" href="photo/?folder=editorial&id=${f}" 
     			class="portfolio-item-preview" data-rel="prettyPhoto">
     		<img src="photo/?folder=editorial&id=${f}" alt="" width="158" height="100" 
     			class="portfolio-img pretty-box"></a> </p>

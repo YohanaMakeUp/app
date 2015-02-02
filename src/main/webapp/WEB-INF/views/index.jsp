@@ -13,32 +13,20 @@
 
 <div class="wrapper">
 	<div id="ei-slider" class="ei-slider">
+		
 		<ul class="ei-slider-large">
-			<li><img src="resources/img/large/1.jpg" alt=""></li>
-			<li><img src="resources/img/large/2.jpg" alt=""></li>
-			<li><img src="resources/img/large/3.jpg" alt=""></li>
-			<li><img src="resources/img/large/4.jpg" alt=""></li>
-			<li><img src="resources/img/large/5.jpg" alt=""></li>
-			<li><img src="resources/img/large/6.jpg" alt=""></li>
-			<li><img src="resources/img/large/7.jpg" alt=""></li>
+		<c:forEach items="${fotos}" var="f">
+			<li><img src="photo/?folder=index&id=${f}" alt=""></li>
+			
+			</c:forEach>
 		</ul>
+			
 		<!-- ei-slider-large -->
 		<ul class="ei-slider-thumbs">
 			<li class="ei-slider-element">Current</li>
-			<li><a href="#">Slide 1</a><img src="resources/img/thumbs/1.jpg"
-				alt=""></li>
-			<li><a href="#">Slide 2</a><img src="resources/img/thumbs/2.jpg"
-				alt=""></li>
-			<li><a href="#">Slide 3</a><img src="resources/img/thumbs/3.jpg"
-				alt=""></li>
-			<li><a href="#">Slide 4</a><img src="resources/img/thumbs/4.jpg"
-				alt=""></li>
-			<li><a href="#">Slide 5</a><img src="resources/img/thumbs/5.jpg"
-				alt=""></li>
-			<li><a href="#">Slide 6</a><img src="resources/img/thumbs/6.jpg"
-				alt=""></li>
-			<li><a href="#">Slide 7</a><img src="resources/img/thumbs/7.jpg"
-				alt=""></li>
+			<c:forEach items="${fotosT}" var="f">
+			<li><a href="#">Slide #</a><img src="photo/?folder=thumbs&id=${f}" alt=""></li>
+				</c:forEach>
 		</ul>
 		<!-- ei-slider-thumbs -->
 	</div>
@@ -76,9 +64,6 @@
 		<c:when test="${user.getRole() eq 'Admin' and not empty user}">
 			
 		<form action="index" id="formularioEditarIndexDos" method="POST">
-			<!--  <button
-				onclick='getElementById("tituloIndexDos").innerHTML=getElementById("nuevoTituloIndexDos").value'>Cambiar
-				Titulo</button>-->
 				<label>Cambiar Texto</label><input name ="nuevoTituloIndexDos" type="text">
 			<input id="nuevoTituloIndexDos" name="Confirmar"type="submit">
 				</form>

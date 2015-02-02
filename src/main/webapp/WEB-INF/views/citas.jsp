@@ -4,10 +4,7 @@
 <!--  Proporciona el calendario , importante -->
 <script src="https:\\code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <!--  Mantienen el formato actual -->
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 
 <script>
 $(function() {
@@ -26,9 +23,6 @@ function delUser(id) {
 }
 
 
-
-
-
   $(function() {
 	  
 	  $( "#from" ).datepicker({
@@ -40,12 +34,9 @@ function delUser(id) {
     	  $( "#to" ).datepicker( "option", "minDate", selectedDate );
       }
     });
-	  
-
-	  
+	    
 	  $( "#to" ).datepicker({
 		  
-
       defaultDate: "+1w",
       changeMonth: true,
       numberOfMonths: 1,
@@ -104,7 +95,6 @@ function delUser(id) {
 				</tr>
 				
 				<c:forEach items="${citas}" var="c">
-				
 				<tr>
 				<td>${c.user.nombre}
 				<td>${c.user.apellidos}

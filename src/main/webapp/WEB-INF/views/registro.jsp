@@ -13,7 +13,7 @@
 				<label>Apellidos</label><br>
 				<input id="apellidos" name="apellidos" type="text" required><br> 
 				<label>Email</label><br>
-				<input id="email" name="email" type="text" required><br> 
+				<input id="email" name="email" type="email" required><br> 
 				<label>Nombre de usuario</label><br>
 				<input id="nombreUsuario" name="nombreUsuario" type="text" required><br>
 				<label>Password </label><br><input id="password" name="password1"
@@ -29,7 +29,7 @@
 					</c:forEach></ul>
 				</c:if>
 				-->
-				<label> ${error} </label>
+				<label style="color: #FF0000"> ${error} </label>
 
 			</form>
 		</div>

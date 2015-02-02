@@ -49,6 +49,7 @@ public class Fecha {
 	@ManyToOne (fetch=FetchType.EAGER)
 	private User user;
 
+
 	public Integer getId() {
 		return id;
 	}
@@ -96,10 +97,9 @@ public class Fecha {
 		this.fechaIni = fechaIni;
 		this.fechaFin = fechaFin;
 		this.user = user;
-
 	}
 
-	public Fecha() {}
+	public Fecha(){}
 
 
 }

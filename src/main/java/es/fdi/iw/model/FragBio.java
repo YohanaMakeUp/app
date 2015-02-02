@@ -18,6 +18,7 @@ public class FragBio {
 	private String titulo;
 	private String texto;
 	
+	
 	public long getId() {
 		return id;
 	}

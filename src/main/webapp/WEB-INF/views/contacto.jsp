@@ -11,7 +11,7 @@
 	  
 	 <c:choose>
     <c:when test="${not empty user}">
-	  <input id="Nombre" name ="Nombre del cliente" type="text" value="${user.getNombre()}"><br>
+	  <input id="Nombre" name ="Nombre del cliente" type="text" value="${user.getNombre()}" required><br>
 	     </c:when>
 	     <c:otherwise>
 	      <input id="Nombre" name ="Nombre del cliente" type="text" placeholder="Nombre" ><br>
@@ -22,7 +22,7 @@
 	 
 	   <c:choose>
     <c:when test="${not empty user}">
-	  <input id="Nombre" name ="Apellido del cliente" type="text" value="${user.getApellidos()}"><br>
+	  <input id="Nombre" name ="Apellido del cliente" type="text" value="${user.getApellidos()}" required><br>
 	   </c:when>
 	     <c:otherwise>
 	     	  <input id="Nombre" name ="Apellido del cliente" type="text" placeholder="Apellido"><br>
@@ -34,7 +34,7 @@
 	     <c:choose>
     <c:when test="${not empty user}">
     
-	  <input id="Nombre" name="Email del cliente" type="email" value="${user.getEmail()}"><br>
+	  <input id="Nombre" name="Email del cliente" type="email" value="${user.getEmail()}" required><br>
 	   </c:when>
 	     <c:otherwise>
 	     
@@ -43,7 +43,7 @@
   </c:choose>
   
 	  <label>Asunto</label><br>
-		<textarea id="nuevoTextoDescriptivo" name="Asunto" style="resize:none;"></textarea><br>
+		<textarea id="nuevoTextoDescriptivo" name="Asunto" style="resize:none;" required></textarea><br>
 		<input type="submit"  value="Enviar"> 
 		<input type="button" value="Resetear Formulario" onClick="this.form.reset()">
 	  </form>
