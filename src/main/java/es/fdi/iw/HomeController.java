@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.persistence.EntityManager;
@@ -96,7 +97,6 @@ public class HomeController {
 
 		model.addAttribute("fotos", f2.list());
 		
-		
 		File f3 = ContextInitializer.getFolder("thumbs");
 
 		model.addAttribute("fotosT", f3.list());
@@ -124,7 +124,21 @@ public class HomeController {
 
 		String titulo = request.getParameter("nuevoTituloIndex");
 		String texto= request.getParameter("nuevoTituloIndexDos");
+		
+		List results = entityManager.createNamedQuery("dameTexto").getResultList();
+		FragIndex foundEntity = null;
+		
+		if(!results.isEmpty()){
+		
+			// ignores multiple results
+			foundEntity = (FragIndex) results.get(0);
+		}
+		else{
+			
+			foundEntity = new FragIndex();
+		}
 
+	
 
 		if(entityManager.createNamedQuery("dameTexto").getResultList().size() != 0){
 
@@ -134,31 +148,30 @@ public class HomeController {
 			model.addAttribute("texto", f);
 		}
 
-		FragIndex f = (FragIndex) entityManager.createNamedQuery("dameTexto").getSingleResult();
-
+		
 		if (texto != null && titulo !=null) {
+		
 
-			f.setTitulo(titulo);
-			f.setTexto(texto);
-			entityManager.persist(f);
-
+			foundEntity.setTitulo(titulo);
+			foundEntity.setTexto(texto);
+			entityManager.persist(foundEntity);
 		}
 		else{ 
 
-			if (titulo != null) {
-
-				f.setTitulo(titulo);
-				entityManager.persist(f);
+			if (titulo != null) {		
+				
+				foundEntity.setTitulo(titulo);
+				entityManager.persist(foundEntity);
 			}
 
 			if (texto != null) {
-
-				f.setTexto(texto);
-				entityManager.persist(f);
+				
+				foundEntity.setTexto(texto);
+				entityManager.persist(foundEntity);
 			}
 		}
 
-		return "index";
+		return "redirect:/";
 	}	
 
 
@@ -305,6 +318,20 @@ public class HomeController {
 
 		String titulo = request.getParameter("nuevoTitulo");
 		String texto= request.getParameter("nuevaDescripcion");
+		
+		List results = entityManager.createNamedQuery("dameTextoBio").getResultList();
+		FragBio foundEntity = null;
+		
+		if(!results.isEmpty()){
+		
+			// ignores multiple results
+			foundEntity = (FragBio) results.get(0);
+		}
+		else{
+			
+			foundEntity = new FragBio();
+		}
+		
 
 		if(entityManager.createNamedQuery("dameTextoBio").getResultList().size() != 0){
 
@@ -314,30 +341,30 @@ public class HomeController {
 			model.addAttribute("texto", f);
 		}
 
-		FragBio f = (FragBio) entityManager.createNamedQuery("dameTextoBio").getSingleResult();
+		
 
 		if (texto != null && titulo !=null) {
 
-			f.setTitulo(titulo);
-			f.setTexto(texto);
-			entityManager.persist(f);
+			foundEntity.setTitulo(titulo);
+			foundEntity.setTexto(texto);
+			entityManager.persist(foundEntity);
 		}
 		else{ 
 
 			if (titulo != null) {
 
-				f.setTitulo(titulo);
-				entityManager.persist(f);
+				foundEntity.setTitulo(titulo);
+				entityManager.persist(foundEntity);
 			}
 
 			if (texto != null) {
 
-				f.setTexto(texto);
-				entityManager.persist(f);
+				foundEntity.setTexto(texto);
+				entityManager.persist(foundEntity);
 			}
 		}
 
-		return "bio";
+		return "redirect:/bio";
 	}	
 
 
@@ -365,11 +392,8 @@ public class HomeController {
 		if (nombre == null || email == null || apellido == null || asunto == null) {
 
 			model.addAttribute("Error", "Rellene todos los campos");
-		} 
-		else {
-
 		}
-
+		
 		return "contacto";
 	}
 

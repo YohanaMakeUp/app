@@ -3,6 +3,6 @@
     	<Resource auth="Container" 
     		driverClassName="org.hsqldb.jdbc.JDBCDriver" 
     		name="jdbc/demoDS" type="javax.sql.DataSource" 
-    		url="jdbc:hsqldb:hsql://localhost/iw" 
+    		url="jdbc:hsqldb:hsql://localhost/iw"
     		username="sa" password=""/>
 </Context>
